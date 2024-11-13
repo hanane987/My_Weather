@@ -1,8 +1,21 @@
-import { reactive } from 'vue';
+import axios from 'axios';
 
-export const weatherStore = reactive({
-  weather: null as any,
-  setWeather(newWeather: any) {
-    this.weather = newWeather;
-  },
-});
+const apiKey = 'your_actual_api_key';  
+const city = 'London';  
+
+const fetchWeather = async () => {
+  try {
+    const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
+      params: {
+        q: city,
+        appid: apiKey
+      }
+    });
+    console.log('Weather Data:', response.data);
+  } catch (error) {
+    console.error('Error fetching weather:', error.response ? error.response.data : error.message);
+  }
+};
+
+fetchWeather();
+
