@@ -1,3 +1,5 @@
+
+
 {
   "compilerOptions": {
     "target": "esnext",
@@ -17,7 +19,7 @@
     "src/**/*.tsx",
     "src/**/*.vue"
   ],
-  "exclude": [
+   "exclude": [
     "node_modules"
   ]
 }
