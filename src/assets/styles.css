@@ -13,15 +13,7 @@
   align-items: center;
 }
 
-/* Weather Card */
-.weather-card {
-  width: 100%;
-  max-width: 702px;
-  background: var(--bg-white-0);
-  border-radius: var(--radius-24);
-  box-shadow: 0px 16px 32px -12px rgba(14, 18, 27, 0.1);
-  padding: 24px 32px;
-}
+
 
 /* Location Header */
 .location-header {
@@ -195,7 +187,179 @@
   font: 500 12px/1 'Inter', sans-serif;
   color: var(--bg-white-0);
 }
-
+.search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    display: flex;
+    gap: 1rem;
+    }
+    
+    .search-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color, #e1e4ea);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background: var(--bg-white-0, #fff);
+    color: var(--text-strong-950, #0e121b);
+    }
+    
+    .search-input:focus {
+    outline: none;
+    border-color: var(--primary-color, #0066ff);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    }
+    
+    .search-button {
+    padding: 0.75rem;
+    background: var(--primary-color, #0066ff);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+    }
+    
+    .search-button:hover {
+    background: var(--primary-color-dark, #0052cc);
+    }
+    
+    .search-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    }
+    
+    .weather-dashboard {
+    min-height: 100vh;
+    padding: 2rem;
+    background: var(--bg-gradient);
+    }
+    
+    .weather-card {
+    background: var(--bg-white-0, #fff);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .settings-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 280px;
+    background: var(--bg-white-0, #fff);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 50;
+    }
+    
+    .toggle-group {
+    display: flex;
+    background: var(--bg-soft-100, #f5f7fa);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    margin-top: 0.5rem;
+    }
+    
+    .toggle-button {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-soft-400, #99a0ae);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    }
+    
+    .toggle-button.toggle-active {
+    background: var(--bg-white-0, #fff);
+    color: var(--text-strong-950, #0e121b);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .forecast-section {
+    margin-top: 2rem;
+    }
+    
+    .forecast-toggle {
+    display: flex;
+    background: var(--bg-soft-100, #f5f7fa);
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    margin-bottom: 1.5rem;
+    }
+    
+    .hourly-forecast,
+    .daily-forecast {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-soft-400, #99a0ae) transparent;
+    }
+    
+    .forecast-item {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 80px;
+    }
+    
+    .forecast-time {
+    font-size: 0.875rem;
+    color: var(--text-soft-600, #525866);
+    }
+    
+    .forecast-icon {
+    width: 40px;
+    height: 40px;
+    }
+    
+    .forecast-temps {
+    display: flex;
+    gap: 0.5rem;
+    font-weight: 500;
+    }
+    
+    .forecast-high {
+    color: var(--text-strong-950, #0e121b);
+    }
+    
+    .forecast-low {
+    color: var(--text-soft-400, #99a0ae);
+    }
+    
+    @media (max-width: 768px) {
+    .weather-dashboard {
+      padding: 1rem;
+    }
+    
+    .weather-card {
+      padding: 1.5rem;
+    }
+    
+    .search-container {
+      margin-bottom: 1.5rem;
+    }
+    
+    .settings-dropdown {
+      width: 100%;
+      max-width: 280px;
+    }
+    }
 /* Responsive Styles */
 @media (max-width: 991px) {
   .weather-dashboard {
