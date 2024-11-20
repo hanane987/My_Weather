@@ -144,6 +144,8 @@
 import { ref, onMounted, computed } from 'vue';
 import { fetchWeatherData } from '../services/WeatherService';
 import '../assets/styles.css';  
+import '../assets/global.css'; 
+
 import type { WeatherMetric, ForecastData, CurrentWeather } from './types/WeatherTypes';
 
 const city = ref('Casablanca');

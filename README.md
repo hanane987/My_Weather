@@ -1,5 +1,3 @@
-# Vue 3 + TypeScript + Vite
+Mon Application Météo 🌤️
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Mon Application Météo est un outil riche en fonctionnalités et convivial pour consulter la météo. Elle fournit des mises à jour météo en temps réel, des prévisions, des données sur l'indice de qualité de l'air (AQI), ainsi que des thèmes et des langues personnalisables, le tout dans un design propre et réactif.
