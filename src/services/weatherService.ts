@@ -1,22 +1,14 @@
-import axios from 'axios';
 
-const apiKey = import.meta.env.VITE_APP_WEATHER_API_KEY;
-const endpoint = 'https://api.weatherapi.com/v1/forecast.json';
+import type { WeatherData } from '../types/weather';
 
-export const fetchWeather = async (city: string) => {
-  try {
-    const response = await axios.get(endpoint, {
-      params: {
-        key: apiKey,
-        q: city,
-        days: 1,  // Fetch forecast for 1 day including hourly data
-        aqi: 'no', // Avoids fetching air quality index data, optional
-        alerts: 'no' // Avoids fetching alert data, optional
-      },
-    });
-    return response.data;
-  } catch (error: any) {
-    console.error('Error fetching weather data:', error);
+export async function fetchWeatherData(city: string): Promise<WeatherData> {
+  const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+  const response = await fetch(
+    `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=yes`
+  );
+
+  if (!response.ok) {
     throw new Error('Failed to fetch weather data');
   }
-};
+
+  const data = await response.json();
