@@ -69,3 +69,34 @@ npm run build:	   Construit l'application pour la production.
 npm run preview:   Prévisualise la version de production localement.
 npm run lint:	   Analyse le code pour détecter les erreurs de style.
 
+🌦️ Rechercher une Ville
+
+    Icône associée : 🏙️
+    Entrez le nom d’une ville dans la barre de recherche.
+    Animation : Effet de glissement sur l’entrée de texte.
+
+🌡️ Changer d’Unité
+
+    Icône associée : 🔄
+    Alternez entre Celsius (°C) et Fahrenheit (°F).
+    Animation : Transition douce du changement d’unité.
+
+🎨 Changer de Thème
+
+    Icône associée : 🌞🌜
+    Passez du mode clair au mode sombre en un clic.
+    Animation : Effet de fondu entre les thèmes.
+
+🌍 Changer de Langue
+
+    Icône associée : 🌐
+    Sélectionnez une langue dans le menu des paramètres.
+    Animation : Liste déroulante avec une rotation subtile.
+
+🌍 Traductions
+
+L'application prend en charge trois langues avec des icônes adaptées :
+Langue	Icône	Code	Traduction Disponible
+Anglais	🇺🇸	en	Oui
+Français	🇫🇷	fr	Oui
+Arabe	🇦🇪	ar	Oui
