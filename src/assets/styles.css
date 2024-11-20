@@ -177,4 +177,23 @@
     min-width: 44px;
   }
   
+  /* Brand Footer */
+  .brand-footer {
+    margin-top: 86px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   
+  .brand-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+  }
+  
+  .brand-name {
+    font: 500 12px/1 'Inter', sans-serif;
+    color: var(--bg-white-0);
+  }
+  
+ 
