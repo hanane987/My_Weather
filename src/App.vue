@@ -1,21 +1,25 @@
 <template>
   <div id="app">
-    <Home />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Home from './views/Home.vue';
-
-export default defineComponent({
-  name: 'App',
-  components: {
-    Home,
-  },
-});
+export default {
+  name: "App",
+};
 </script>
 
-<style>
-/* Add your global styles here */
+
+
+
+<style scoped>
+.weather-app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 20px;
+}
 </style>
