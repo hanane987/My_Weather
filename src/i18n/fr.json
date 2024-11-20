@@ -1,0 +1,18 @@
+{
+    "temperature": "Température",
+    "measurements": "Mesures",
+    "theme": "Thème",
+    "language": "Langue",
+    "metric": "Métrique",
+    "imperial": "Impérial",
+    "light": "Clair",
+    "dark": "Sombre",
+    "feelsLike": "Ressenti",
+    "humidity": "Humidité",
+    "wind": "Vent",
+    "precipitation": "Précipitations",
+    "aqi": "IQA",
+    "hourlyForecast": "Prévisions horaires",
+    "sevenDayForecast": "Prévisions sur 7 jours"
+  }
+  

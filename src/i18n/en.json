@@ -1,0 +1,18 @@
+{
+    "temperature": "Temperature",
+    "measurements": "Measurements",
+    "theme": "Theme",
+    "language": "Language",
+    "metric": "Metric",
+    "imperial": "Imperial",
+    "light": "Light",
+    "dark": "Dark",
+    "feelsLike": "Feels like",
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "precipitation": "Precipitation",
+    "aqi": "AQI",
+    "hourlyForecast": "Hourly Forecast",
+    "sevenDayForecast": "7-Day Forecast"
+  }
+  
