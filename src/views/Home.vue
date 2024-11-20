@@ -97,7 +97,6 @@
 </section>
 </section>
 <footer class="brand-footer">
-<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/f8b7a5f0b605783b1bf4624487fd277c2e8611378bc0e515ed0084a62ad6c657?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089" alt="Brand logo" class="brand-logo" />
 <p class="brand-name">BRAND NAME</p>
 </footer>
 </main>
@@ -134,62 +133,68 @@ const hourlyForecast = ref<ForecastData[]>([]);
 const dailyForecast = ref<ForecastData[]>([]);
 
 const formattedDate = computed(() => {
-return new Date().toLocaleDateString('en-US', {
+const date = new Date();
+const options: Intl.DateTimeFormatOptions = {
   weekday: 'long',
-  year: 'numeric',
   month: 'long',
-  day: 'numeric'
-});
+  day: 'numeric',
+  year: 'numeric'
+};
+return date.toLocaleDateString('en-US', options);
 });
 
 const formattedTime = computed(() => {
-return new Date().toLocaleTimeString('en-US', {
-  hour: 'numeric',
-  minute: '2-digit'
-});
+const date = new Date();
+const hours = date.getHours();
+const minutes = date.getMinutes();
+const ampm = hours >= 12 ? 'PM' : 'AM';
+const formattedHours = hours % 12 || 12;
+const formattedMinutes = minutes.toString().padStart(2, '0');
+return `${formattedHours}:${formattedMinutes} ${ampm}`;
 });
 
 const weatherMetrics = computed(() => [
 {
-  type: 'humidity',
-  label: 'Humidity',
-  value: currentWeather.value.humidity,
-  unit: '%',
-  icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/fea7a12480e5c80fb5fc2620b6d243d1822eeb247497ca8165613d3b6a0122db?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+type: 'humidity',
+label: 'Humidity',
+value: currentWeather.value.humidity,
+unit: '%',
+icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/fea7a12480e5c80fb5fc2620b6d243d1822eeb247497ca8165613d3b6a0122db?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
 },
 {
-  type: 'wind',
-  label: 'Wind',
-  value: currentWeather.value.windSpeed,
-  unit: measurementUnit.value === 'metric' ? 'km/h' : 'mph',
-  icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/087615e4d4c559bdf34be66af60cc3f0f00be8de5145c64f99a0427b2751058e?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+type: 'wind',
+label: 'Wind',
+value: currentWeather.value.windSpeed,
+unit: measurementUnit.value === 'metric' ? 'km/h' : 'mph',
+icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/087615e4d4c559bdf34be66af60cc3f0f00be8de5145c64f99a0427b2751058e?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
 },
 {
-  type: 'precipitation',
-  label: 'Precipitation',
-  value: currentWeather.value.precipitation,
-  unit: '%',
-  icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/df4108f62ceca6b8d453aa2e8a16ff66dfa7eb1a7f8457ab4ecfb604c2094d18?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+type: 'precipitation',
+label: 'Precipitation',
+value: currentWeather.value.precipitation,
+unit: '%',
+icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/df4108f62ceca6b8d453aa2e8a16ff66dfa7eb1a7f8457ab4ecfb604c2094d18?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
 },
 {
-  type: 'aqi',
-  label: 'AQI',
-  value: currentWeather.value.aqi,
-  unit: '',
-  icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/9699f5d1ae39a8f66a120ca1dc8b27ac975124f9c565c1c3720c062b19e61056?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+type: 'aqi',
+label: 'AQI',
+value: currentWeather.value.aqi,
+unit: '',
+icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/9699f5d1ae39a8f66a120ca1dc8b27ac975124f9c565c1c3720c062b19e61056?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+
 }
 ]);
 
 const handleSearch = async () => {
 if (searchQuery.value.trim()) {
-  try {
-    city.value = searchQuery.value.trim();
-    await fetchWeather();
-    updateSearchHistory(searchQuery.value.trim());
-    searchQuery.value = '';
-  } catch (error) {
-    console.error('Failed to fetch weather data:', error);
-  }
+try {
+  city.value = searchQuery.value.trim();
+  await fetchWeather();
+  updateSearchHistory(searchQuery.value.trim());
+  searchQuery.value = '';
+} catch (error) {
+  console.error('Failed to fetch weather data:', error);
+}
 }
 };
 
@@ -198,8 +203,8 @@ const normalizedCity = searchedCity.trim();
 if (!normalizedCity) return;
 
 searchHistory.value = [
-  normalizedCity,
-  ...searchHistory.value.filter(c => c !== normalizedCity)
+normalizedCity,
+...searchHistory.value.filter(c => c !== normalizedCity)
 ].slice(0, 5);
 };
 
@@ -226,13 +231,17 @@ return temperatureUnit.value === 'C' ? temp : (temp * 9/5) + 32;
 
 const formatMetricValue = (metric: WeatherMetric): string => {
 if (metric.type === 'wind' && measurementUnit.value === 'imperial') {
-  return `${Math.round(metric.value * 0.621371)} ${metric.unit}`;
+return `${Math.round(metric.value * 0.621371)} ${metric.unit}`;
 }
 return `${metric.value}${metric.unit}`;
 };
 
 const formatTime = (time: string): string => {
-return new Date(time).toLocaleTimeString('en-US', { hour: 'numeric' });
+const date = new Date(time);
+const hours = date.getHours();
+const ampm = hours >= 12 ? 'PM' : 'AM';
+const formattedHours = hours % 12 || 12;
+return `${formattedHours}${ampm}`;
 };
 
 const formatDate = (date: string): string => {
@@ -241,22 +250,409 @@ return new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
 
 const fetchWeather = async () => {
 try {
-  const data = await fetchWeatherData(city.value);
-  currentWeather.value = data.current;
-  if (forecastType.value === 'hourly') {
-    hourlyForecast.value = data.hourly;
-  } else {
-    dailyForecast.value = data.daily;
-  }
+const data = await fetchWeatherData(city.value);
+currentWeather.value = data.current;
+if (forecastType.value === 'hourly') {
+  hourlyForecast.value = data.hourly;
+} else {
+  dailyForecast.value = data.daily;
+}
 } catch (error) {
-  console.error('Failed to fetch weather data:', error);
+console.error('Failed to fetch weather data:', error);
 }
 };
 
 onMounted(() => {
 fetchWeather();
 setInterval(() => {
-  fetchWeather();
+fetchWeather();
 }, 300000);
 });
 </script>
+
+<style scoped>
+.search-container {
+position: relative;
+max-width: 500px;
+margin: 0 auto 2rem;
+display: flex;
+gap: 1rem;
+}
+
+.search-input {
+flex: 1;
+padding: 0.75rem 1rem;
+border: 1px solid var(--border-color, #e1e4ea);
+border-radius: 0.5rem;
+font-size: 1rem;
+background: var(--bg-white-0, #fff);
+color: var(--text-strong-950, #0e121b);
+}
+
+.search-input:focus {
+outline: none;
+border-color: var(--primary-color, #0066ff);
+box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+.search-button {
+padding: 0.75rem;
+background: var(--primary-color, #0066ff);
+border: none;
+border-radius: 0.5rem;
+color: white;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: background-color 0.2s;
+}
+
+.search-button:hover {
+background: var(--primary-color-dark, #0052cc);
+}
+
+.search-button:focus {
+outline: none;
+box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+.weather-dashboard {
+min-height: 100vh;
+padding: 2rem;
+background: var(--bg-gradient);
+}
+
+.weather-card {
+background: var(--bg-white-0, #fff);
+border-radius: 1.5rem;
+padding: 2rem;
+max-width: 800px;
+margin: 0 auto;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.location-header {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+margin-bottom: 2rem;
+}
+
+.city-title {
+font-size: 2.5rem;
+font-weight: 700;
+color: var(--text-strong-950, #0e121b);
+margin: 0;
+}
+
+.datetime {
+margin-top: 0.5rem;
+}
+
+.date {
+display: block;
+font-size: 1rem;
+color: var(--text-sub-600, #525866);
+}
+
+.time {
+display: block;
+font-size: 0.875rem;
+color: var(--text-sub-600, #525866);
+margin-top: 0.25rem;
+}
+
+.settings-panel {
+position: relative;
+}
+
+.settings-button {
+background: none;
+border: 1px solid var(--border-color, #e1e4ea);
+border-radius: 0.5rem;
+padding: 0.5rem;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+.settings-button:hover {
+background: var(--bg-soft-100, #f5f7fa);
+}
+
+.settings-dropdown {
+position: absolute;
+top: calc(100% + 0.5rem);
+right: 0;
+width: 280px;
+background: var(--bg-white-0, #fff);
+border-radius: 0.75rem;
+padding: 1rem;
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+z-index: 50;
+}
+
+.settings-label {
+font-size: 0.875rem;
+font-weight: 500;
+color: var(--text-strong-950, #0e121b);
+margin: 0 0 0.5rem;
+}
+
+.toggle-group {
+display: flex;
+background: var(--bg-soft-100, #f5f7fa);
+border-radius: 0.5rem;
+padding: 0.25rem;
+}
+
+.toggle-button {
+flex: 1;
+padding: 0.5rem;
+border: none;
+border-radius: 0.375rem;
+font-size: 0.875rem;
+font-weight: 500;
+color: var(--text-soft-400, #99a0ae);
+background: transparent;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.toggle-button.toggle-active {
+background: var(--bg-white-0, #fff);
+color: var(--text-strong-950, #0e121b);
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.measurement-settings {
+margin-top: 1rem;
+}
+
+.current-weather {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 2rem;
+}
+
+.temperature-display {
+display: flex;
+align-items: center;
+gap: 1rem;
+}
+
+.weather-icon {
+width: 4rem;
+height: 4rem;
+}
+
+.current-temp {
+font-size: 3.5rem;
+font-weight: 700;
+color: var(--text-strong-950, #0e121b);
+margin: 0;
+}
+
+.weather-info {
+text-align: right;
+}
+
+.weather-condition {
+font-size: 1.25rem;
+font-weight: 700;
+color: var(--text-strong-950, #0e121b);
+margin: 0;
+}
+
+.feels-like {
+font-size: 1rem;
+color: var(--text-sub-600, #525866);
+margin: 0.25rem 0 0;
+}
+
+.metrics-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 1rem;
+margin-bottom: 2rem;
+}
+
+.metric-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1rem;
+background: var(--bg-soft-50, #f8f9fb);
+border-radius: 0.75rem;
+}
+
+.metric-label {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+
+.metric-icon {
+width: 1.5rem;
+height: 1.5rem;
+}
+
+.metric-value {
+font-weight: 700;
+color: var(--text-strong-950, #0e121b);
+margin: 0;
+}
+
+.aqi-section {
+margin-bottom: 2rem;
+}
+
+.aqi-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 0.5rem;
+}
+
+.aqi-title {
+font-size: 0.875rem;
+font-weight: 500;
+color: var(--text-strong-950, #0e121b);
+margin: 0;
+}
+
+.aqi-tooltip {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+
+.aqi-value {
+font-weight: 700;
+color: var(--text-strong-950, #0e121b);
+}
+
+.progress-bar {
+height: 0.375rem;
+background: var(--bg-soft-100, #f5f7fa);
+border-radius: 999px;
+overflow: hidden;
+}
+
+.progress-line {
+height: 100%;
+background: var(--danger-500, #fb3748);
+border-radius: 999px;
+transition: width 0.3s ease;
+}
+
+.forecast-section {
+margin-top: 2rem;
+}
+
+.forecast-toggle {
+display: flex;
+background: var(--bg-soft-100, #f5f7fa);
+border-radius: 0.5rem;
+padding: 0.25rem;
+margin-bottom: 1.5rem;
+}
+
+.hourly-forecast,
+.daily-forecast {
+display: flex;
+gap: 1.5rem;
+overflow-x: auto;
+padding: 0.5rem 0;
+scrollbar-width: thin;
+scrollbar-color: var(--text-soft-400, #99a0ae) transparent;
+}
+
+.forecast-item {
+flex: 0 0 auto;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 0.5rem;
+min-width: 80px;
+}
+
+.forecast-time {
+font-size: 0.875rem;
+color: var(--text-soft-600, #525866);
+}
+
+.forecast-icon {
+width: 2.5rem;
+height: 2.5rem;
+}
+
+.forecast-temps {
+display: flex;
+gap: 0.5rem;
+font-weight: 500;
+}
+
+.forecast-high {
+color: var(--text-strong-950, #0e121b);
+}
+
+.forecast-low {
+color: var(--text-soft-400, #99a0ae);
+}
+
+.brand-footer {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.5rem;
+margin-top: 2rem;
+}
+
+.brand-logo {
+width: 2.5rem;
+height: 2.5rem;
+border-radius: 999px;
+}
+
+.brand-name {
+font-size: 0.75rem;
+font-weight: 500;
+color: var(--text-white-0, #fff);
+margin: 0;
+}
+
+@media (max-width: 768px) {
+.weather-dashboard {
+padding: 1rem;
+}
+
+.weather-card {
+padding: 1.5rem;
+}
+
+.search-container {
+margin-bottom: 1.5rem;
+}
+
+.settings-dropdown {
+width: 100%;
+max-width: 280px;
+}
+
+.metrics-grid {
+grid-template-columns: 1fr;
+}
+
+.current-weather {
+flex-direction: column;
+align-items: flex-start;
+gap: 1rem;
+}
+
+.weather-info {
+text-align: left;
+}
+}
+</style>

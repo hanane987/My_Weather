@@ -1,18 +1,22 @@
 {
-    "temperature": "Température",
-    "measurements": "Mesures",
-    "theme": "Thème",
-    "language": "Langue",
-    "metric": "Métrique",
-    "imperial": "Impérial",
-    "light": "Clair",
-    "dark": "Sombre",
+  "search": {
+    "placeholder": "Rechercher une ville..."
+  },
+  "weather": {
     "feelsLike": "Ressenti",
     "humidity": "Humidité",
     "wind": "Vent",
     "precipitation": "Précipitations",
     "aqi": "IQA",
-    "hourlyForecast": "Prévisions horaires",
-    "sevenDayForecast": "Prévisions sur 7 jours"
+    "forecast": {
+      "hourly": "Prévisions horaires",
+      "daily": "Prévisions 7 jours"
+    }
+  },
+  "settings": {
+    "temperature": "Température",
+    "measurements": "Mesures",
+    "metric": "Métrique",
+    "imperial": "Impérial"
   }
-  
+}

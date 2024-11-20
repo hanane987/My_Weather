@@ -1,18 +1,22 @@
 {
-    "temperature": "Temperature",
-    "measurements": "Measurements",
-    "theme": "Theme",
-    "language": "Language",
-    "metric": "Metric",
-    "imperial": "Imperial",
-    "light": "Light",
-    "dark": "Dark",
+  "search": {
+    "placeholder": "Search for a city..."
+  },
+  "weather": {
     "feelsLike": "Feels like",
     "humidity": "Humidity",
     "wind": "Wind",
     "precipitation": "Precipitation",
     "aqi": "AQI",
-    "hourlyForecast": "Hourly Forecast",
-    "sevenDayForecast": "7-Day Forecast"
+    "forecast": {
+      "hourly": "Hourly Forecast",
+      "daily": "7-Day Forecast"
+    }
+  },
+  "settings": {
+    "temperature": "Temperature",
+    "measurements": "Measurements",
+    "metric": "Metric",
+    "imperial": "Imperial"
   }
-  
+}
