@@ -96,7 +96,54 @@ npm run lint:	   Analyse le code pour détecter les erreurs de style.
 🌍 Traductions
 
 L'application prend en charge trois langues avec des icônes adaptées :
-Langue	Icône	Code	Traduction Disponible
-Anglais	🇺🇸	en	Oui
-Français	🇫🇷	fr	Oui
-Arabe	🇦🇪	ar	Oui
+
+Anglais	
+Français	
+Arabe	
+🎨 Mode Clair et Mode Sombre
+Icônes associées
+
+    🌞 Mode Clair : Thème lumineux pour une lecture confortable de jour.
+    🌜 Mode Sombre : Idéal pour la nuit ou des environnements à faible luminosité.
+
+Animations
+
+    Transition douce lors du basculement entre les thèmes.
+    Ajout d'une ombre progressive pour améliorer la lisibilité.
+
+
+✨ Animations et Icônes
+Ajout des Animations
+
+Ajoutez les classes d'animation dans vos composants HTML :
+
+<div class="animate__animated animate__fadeIn">
+  <h1>Bienvenue dans Mon Application Météo 🌦️</h1>
+</div>
+
+
+
+📸 Captures d’Écran et Vidéos
+
+    Mode Clair avec Animations
+
+    Mode Sombre avec Icônes
+
+❓ FAQ
+Comment personnaliser les animations ?
+
+Modifiez ou ajoutez des classes depuis Animate.css.
+Les icônes ne s'affichent pas ?
+
+Vérifiez que Font Awesome est correctement importé dans votre projet.
+🤝 Contributions
+
+
+📜 Licence
+
+Ce projet est sous licence MIT. Consultez le fichier LICENSE pour plus de détails.
+📬 Contact
+
+    Nom : Hanane Lemnissir 
+    Email : aminahanane987@gmail.com
+
