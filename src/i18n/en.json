@@ -1,18 +1,35 @@
 {
+  "search": {
+    "placeholder": "Search for a city..."
+  },
+  "settings": {
+    "openSettings": "Open Settings",
+    "settingsIcon": "Settings icon",
     "temperature": "Temperature",
     "measurements": "Measurements",
-    "theme": "Theme",
-    "language": "Language",
     "metric": "Metric",
-    "imperial": "Imperial",
-    "light": "Light",
-    "dark": "Dark",
+    "imperial": "Imperial"
+  },
+  "weather": {
+    "currentIcon": "Current weather icon",
     "feelsLike": "Feels like",
     "humidity": "Humidity",
     "wind": "Wind",
     "precipitation": "Precipitation",
-    "aqi": "AQI",
-    "hourlyForecast": "Hourly Forecast",
-    "sevenDayForecast": "7-Day Forecast"
+    "aqi": "Air Quality Index",
+    "aqiInfo": "AQI information",
+    "humidityIcon": "Humidity icon",
+    "windIcon": "Wind icon",
+    "precipitationIcon": "Precipitation icon",
+    "aqiIcon": "AQI icon",
+    "forecast": {
+      "hourly": "Hourly Forecast",
+      "daily": "7-Day Forecast",
+      "iconAlt": "Weather icon for {time}"
+    }
+  },
+  "brand": {
+    "logo": "Brand logo",
+    "name": "BRAND NAME"
   }
-  
+}

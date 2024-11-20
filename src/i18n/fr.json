@@ -1,18 +1,35 @@
 {
+  "search": {
+    "placeholder": "Rechercher une ville..."
+  },
+  "settings": {
+    "openSettings": "Ouvrir les paramètres",
+    "settingsIcon": "Icône des paramètres",
     "temperature": "Température",
     "measurements": "Mesures",
-    "theme": "Thème",
-    "language": "Langue",
     "metric": "Métrique",
-    "imperial": "Impérial",
-    "light": "Clair",
-    "dark": "Sombre",
+    "imperial": "Impérial"
+  },
+  "weather": {
+    "currentIcon": "Icône météo actuelle",
     "feelsLike": "Ressenti",
     "humidity": "Humidité",
     "wind": "Vent",
     "precipitation": "Précipitations",
-    "aqi": "IQA",
-    "hourlyForecast": "Prévisions horaires",
-    "sevenDayForecast": "Prévisions sur 7 jours"
+    "aqi": "Indice de qualité de l'air",
+    "aqiInfo": "Informations sur l'IQA",
+    "humidityIcon": "Icône d'humidité",
+    "windIcon": "Icône de vent",
+    "precipitationIcon": "Icône de précipitations", 
+    "aqiIcon": "Icône IQA",
+    "forecast": {
+      "hourly": "Prévisions horaires",
+      "daily": "Prévisions sur 7 jours",
+      "iconAlt": "Icône météo pour {time}"
+    }
+  },
+  "brand": {
+    "logo": "Logo de la marque",
+    "name": "NOM DE LA MARQUE"
   }
-  
+}
