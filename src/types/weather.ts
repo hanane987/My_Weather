@@ -1,35 +1,34 @@
-export interface Condition {
-  text: string;
+export interface WeatherMetric {
+  type: 'humidity' | 'wind' | 'precipitation' | 'aqi';
+  label: string;
+  value: number;
+  unit: string;
   icon: string;
-  code: number;
 }
 
-export interface Hour {
-  time_epoch: number;
-  time: string;
-  temp_c: number;
-  condition: Condition;
+export interface ForecastData {
+  time?: string;
+  date?: string;
+  temp?: number;
+  high?: number;
+  low?: number;
+  icon: string;
+  condition: string;
 }
 
-export interface Day {
-  maxtemp_c: number;
-  mintemp_c: number;
-  avgtemp_c: number;
-  condition: Condition;
+export interface CurrentWeather {
+  temp: number;
+  feelsLike: number;
+  condition: string;
+  icon: string;
+  humidity: number;
+  windSpeed: number;
+  precipitation: number;
+  aqi: number;
 }
 
-export interface ForecastDay {
-  date: string;
-  day: Day;
-  hour: Hour[];
-}
-
-export interface Weather {
-  current: {
-    temp_c: number;
-    condition: Condition;
-  };
-  forecast: {
-    forecastday: ForecastDay[];
-  };
+export interface WeatherData {
+  current: CurrentWeather;
+  hourly: ForecastData[];
+  daily: ForecastData[];
 }
