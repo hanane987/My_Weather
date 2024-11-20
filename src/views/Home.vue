@@ -1,133 +1,142 @@
 <template>
-  <div class="home">
-    <h1>{{ $t('weatherApp') }}</h1>
-    <input v-model="city" placeholder="Enter city name" />
-    <button @click="fetchWeatherData">{{ $t('getWeather') }}</button>
-
-    <!-- Language Selection Dropdown -->
-    <div>
-      <select @change="changeLanguage($event.target.value)">
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-      </select>
+<main class="weather-dashboard">
+<section class="weather-card">
+  <header class="location-header">
+    <div class="location-info">
+      <h1 class="city-title">{{ city }}</h1>
+      <div class="datetime">
+        <time class="date">{{ formattedDate }}</time>
+        <time class="time">{{ formattedTime }}</time>
+      </div>
     </div>
-
-    <!-- Temperature Unit Toggle -->
-    <div class="unit-toggle">
-      <label>
-        <input type="radio" value="C" v-model="temperatureUnit" /> {{ $t('celsius') }}
-      </label>
-      <label>
-        <input type="radio" value="F" v-model="temperatureUnit" /> {{ $t('fahrenheit') }}
-      </label>
-    </div>
-
-    <!-- Display 7-Day Forecast -->
-    <div v-if="dailyForecast && dailyForecast.length > 0">
-      <h3>{{ $t('sevenDayForecast') }}</h3>
-      <div class="daily-forecast">
-        <div
-          v-for="(day, index) in dailyForecast"
-          :key="index"
-          class="day"
-          @click="selectDay(day)"
-        >
-          <p>{{ formatDate(day.date) }}</p>
-          <p>
-            Avg Temp: {{ convertTemperature(day.day.avgtemp_c) }}°{{ temperatureUnit }}
-          </p>
-          <p>{{ day.day.condition.text }}</p>
+    <div class="settings-panel">
+      <button class="settings-button" aria-label="Open Settings" @click="toggleSettings">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e931b69bcf1dbba98773a36703b4f4d387d04cb8ff026dd09009c308a3cb007f?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089" alt="Settings icon" class="settings-icon" />
+      </button>
+      <div v-if="showSettings" class="settings-dropdown">
+        <div class="temperature-settings">
+          <h2 class="settings-label">Temperature</h2>
+          <div class="toggle-group">
+            <button 
+              class="toggle-button" 
+              :class="{ 'toggle-active': temperatureUnit === 'C' }"
+              @click="updateTemperatureUnit('C')"
+            >°C</button>
+            <button 
+              class="toggle-button"
+              :class="{ 'toggle-active': temperatureUnit === 'F' }"
+              @click="updateTemperatureUnit('F')"
+            >°F</button>
+          </div>
+        </div>
+        <div class="measurement-settings">
+          <h2 class="settings-label">Measurements</h2>
+          <div class="toggle-group">
+            <button 
+              class="toggle-button"
+              :class="{ 'toggle-active': measurementUnit === 'metric' }"
+              @click="updateMeasurementUnit('metric')"
+            >Metric</button>
+            <button 
+              class="toggle-button"
+              :class="{ 'toggle-active': measurementUnit === 'imperial' }"
+              @click="updateMeasurementUnit('imperial')"
+            >Imperial</button>
+          </div>
         </div>
       </div>
     </div>
+  </header>
 
-    <!-- Display Hourly Forecast for Selected Day -->
-    <div v-if="selectedDay">
-      <h3>{{ $t('hourlyForecastFor') }} {{ formatDate(selectedDay.date) }}</h3>
-      <div class="hourly-forecast">
-        <div v-for="hour in selectedDay.hour" :key="hour.time_epoch" class="hour">
-          <p>
-            {{ formatHour(hour.time) }}: {{ convertTemperature(hour.temp_c) }}°{{ temperatureUnit }}
-          </p>
-          <p>{{ hour.condition.text }}</p>
+  <section class="current-weather">
+    <div class="temperature-display">
+      <img :src="currentWeather.icon" alt="Current weather icon" class="weather-icon" />
+      <p class="current-temp">{{ formatTemperature(currentWeather.temp) }}°</p>
+    </div>
+    <div class="weather-info">
+      <h2 class="weather-condition">{{ currentWeather.condition }}</h2>
+      <p class="feels-like">Feels like {{ formatTemperature(currentWeather.feelsLike) }}°</p>
+    </div>
+  </section>
+
+  <section class="weather-metrics">
+    <div class="metrics-grid">
+      <div class="metric-item" v-for="metric in weatherMetrics" :key="metric.type">
+        <div class="metric-label">
+          <img :src="metric.icon" :alt="`${metric.label} icon`" class="metric-icon" />
+          <span>{{ metric.label }}</span>
+        </div>
+        <p class="metric-value">{{ formatMetricValue(metric) }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="aqi-section">
+    <div class="aqi-header">
+      <h2 class="aqi-title">AQI</h2>
+      <div class="aqi-tooltip">
+        <span class="aqi-value">{{ currentWeather.aqi }}</span>
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/272b2151a9855fd4230caf13526a188e039f207e442600def44b27eee10ec2e4?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089" alt="AQI info" class="tooltip-icon" />
+      </div>
+    </div>
+    <div class="progress-bar">
+      <div 
+        class="progress-line" 
+        role="progressbar" 
+        :aria-valuenow="currentWeather.aqi" 
+        aria-valuemin="0" 
+        aria-valuemax="300"
+        :style="{ width: `${(currentWeather.aqi / 300) * 100}%` }"
+      ></div>
+    </div>
+  </section>
+
+  <section class="forecast-section">
+    <div class="forecast-toggle">
+      <button 
+        class="toggle-button" 
+        :class="{ 'toggle-active': forecastType === 'hourly' }"
+        @click="updateForecastType('hourly')"
+      >Hourly Forecast</button>
+      <button 
+        class="toggle-button"
+        :class="{ 'toggle-active': forecastType === 'daily' }"
+        @click="updateForecastType('daily')"
+      >7-Day Forecast</button>
+    </div>
+    <div v-if="forecastType === 'hourly'" class="hourly-forecast" role="list">
+      <div 
+        class="forecast-item" 
+        role="listitem" 
+        v-for="hour in hourlyForecast" 
+        :key="hour.time"
+      >
+        <time class="forecast-time">{{ formatTime(hour.time) }}</time>
+        <img :src="hour.icon" :alt="`Weather icon for ${formatTime(hour.time)}`" class="forecast-icon" />
+        <p class="forecast-temp">{{ formatTemperature(hour.temp) }}°</p>
+      </div>
+    </div>
+    <div v-else class="daily-forecast" role="list">
+      <div 
+        class="forecast-item" 
+        role="listitem" 
+        v-for="day in dailyForecast" 
+        :key="day.date"
+      >
+        <time class="forecast-time">{{ formatDate(day.date) }}</time>
+        <img :src="day.icon" :alt="`Weather icon for ${formatDate(day.date)}`" class="forecast-icon" />
+        <div class="forecast-temps">
+          <p class="forecast-high">{{ formatTemperature(day.high) }}°</p>
+          <p class="forecast-low">{{ formatTemperature(day.low) }}°</p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+</section>
+
+<footer class="brand-footer">
+  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/f8b7a5f0b605783b1bf4624487fd277c2e8611378bc0e515ed0084a62ad6c657?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089" alt="Brand logo" class="brand-logo" />
+  <p class="brand-name">BRAND NAME</p>
+</footer>
+</main>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { fetchWeather } from '../services/weatherService';
-import { useI18n } from 'vue-i18n';
-
-export default defineComponent({
-  name: 'Home',
-  setup() {
-    const { t, i18n } = useI18n(); // Use useI18n to access t and i18n
-
-    const city = ref('');
-    const dailyForecast = ref([]);
-    const selectedDay = ref(null);
-    const temperatureUnit = ref('C');
-
-    // Fetch weather data function
-    const fetchWeatherData = async () => {
-      if (!city.value) return;
-
-      try {
-        const data = await fetchWeather(city.value);
-        if (data.forecast && data.forecast.forecastday && data.forecast.forecastday.length >= 7) {
-          dailyForecast.value = data.forecast.forecastday;
-        } else {
-          console.error('Invalid data structure or missing forecast data');
-        }
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-    };
-
-    // Select a day to show hourly forecast
-    const selectDay = (day) => {
-      selectedDay.value = day;
-    };
-
-    // Format date function
-    const formatDate = (date: string) => {
-      const d = new Date(date);
-      return ${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()};
-    };
-
-    // Format hour function
-    const formatHour = (time: string) => {
-      const date = new Date(time);
-      return date.getHours() + ':00';
-    };
-
-    // Temperature conversion function (Celsius to Fahrenheit)
-    const convertTemperature = (tempCelsius) => {
-      return temperatureUnit.value === 'C'
-        ? tempCelsius
-        : (tempCelsius * 9) / 5 + 32;
-    };
-
-    // Language change function
-    const changeLanguage = (lang: string) => {
-      i18n.global.locale = lang; // Change language using i18n instance
-    };
-
-    return {
-      t,
-      city,
-      dailyForecast,
-      selectedDay,
-      temperatureUnit,
-      fetchWeatherData,
-      formatDate,
-      formatHour,
-      selectDay,
-      convertTemperature,
-      changeLanguage,
-    };
-  },
-});
