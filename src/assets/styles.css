@@ -155,4 +155,26 @@
     transition: width 0.3s ease;
   }
   
- 
+  /* Forecast Section */
+  .forecast-section {
+    margin-top: 40px;
+  }
+  
+  .hourly-forecast {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .forecast-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 44px;
+  }
+  
+  
