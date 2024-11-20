@@ -120,5 +120,19 @@
     letter-spacing: -0.56px;
   }
   
- 
+  /* Weather Metrics */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px 56px;
+    margin-top: 40px;
+  }
   
+  .metric-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 500 14px/1 'Inter', sans-serif;
+  }
+  
+ 
