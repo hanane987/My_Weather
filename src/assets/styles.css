@@ -99,3 +99,26 @@
                 0px 2px 4px 0px rgba(14, 18, 27, 0.03);
   }
   
+  /* Current Weather */
+  .current-weather {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  
+  .temperature-display {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .current-temp {
+    font: 700 56px/1 'Inter Display', sans-serif;
+    color: var(--text-strong-950);
+    letter-spacing: -0.56px;
+  }
+  
+ 
+  
