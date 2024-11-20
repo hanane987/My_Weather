@@ -140,3 +140,133 @@
 </footer>
 </main>
 </template>
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue';
+import { fetchWeatherData } from './services/WeatherService';
+import type { WeatherMetric, ForecastData, CurrentWeather } from './types/WeatherTypes';
+
+const city = ref('Casablanca');
+const showSettings = ref(false);
+const temperatureUnit = ref<'C' | 'F'>('C');
+const measurementUnit = ref<'metric' | 'imperial'>('metric');
+const forecastType = ref<'hourly' | 'daily'>('hourly');
+
+const currentWeather = ref<CurrentWeather>({
+  temp: 0,
+  feelsLike: 0,
+  condition: '',
+  icon: '',
+  humidity: 0,
+  windSpeed: 0,
+  precipitation: 0,
+  aqi: 0
+});
+
+const hourlyForecast = ref<ForecastData[]>([]);
+const dailyForecast = ref<ForecastData[]>([]);
+
+const formattedDate = computed(() => {
+  return new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+});
+
+const formattedTime = computed(() => {
+  return new Date().toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit'
+  });
+});
+
+const weatherMetrics = computed(() => [
+  {
+    type: 'humidity',
+    label: 'Humidity',
+    value: currentWeather.value.humidity,
+    unit: '%',
+    icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/fea7a12480e5c80fb5fc2620b6d243d1822eeb247497ca8165613d3b6a0122db?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+  },
+  {
+    type: 'wind',
+    label: 'Wind',
+    value: currentWeather.value.windSpeed,
+    unit: measurementUnit.value === 'metric' ? 'km/h' : 'mph',
+    icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/087615e4d4c559bdf34be66af60cc3f0f00be8de5145c64f99a0427b2751058e?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+  },
+  {
+    type: 'precipitation',
+    label: 'Precipitation',
+    value: currentWeather.value.precipitation,
+    unit: '%',
+    icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/df4108f62ceca6b8d453aa2e8a16ff66dfa7eb1a7f8457ab4ecfb604c2094d18?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+  },
+  {
+    type: 'aqi',
+    label: 'AQI',
+    value: currentWeather.value.aqi,
+    unit: '',
+    icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/9699f5d1ae39a8f66a120ca1dc8b27ac975124f9c565c1c3720c062b19e61056?placeholderIfAbsent=true&apiKey=cd24fd1b28c242d2876d3559d5180089'
+  }
+]);
+
+const toggleSettings = () => {
+  showSettings.value = !showSettings.value;
+};
+
+const updateTemperatureUnit = (unit: 'C' | 'F') => {
+  temperatureUnit.value = unit;
+};
+
+const updateMeasurementUnit = (unit: 'metric' | 'imperial') => {
+  measurementUnit.value = unit;
+};
+
+const updateForecastType = (type: 'hourly' | 'daily') => {
+  forecastType.value = type;
+  fetchWeather();
+};
+
+const formatTemperature = (temp: number): number => {
+  return temperatureUnit.value === 'C' ? temp : (temp * 9/5) + 32;
+};
+
+const formatMetricValue = (metric: WeatherMetric): string => {
+  if (metric.type === 'wind' && measurementUnit.value === 'imperial') {
+    return `${Math.round(metric.value * 0.621371)} ${metric.unit}`;
+  }
+  return `${metric.value}${metric.unit}`;
+};
+
+const formatTime = (time: string): string => {
+  return new Date(time).toLocaleTimeString('en-US', { hour: 'numeric' });
+};
+
+const formatDate = (date: string): string => {
+  return new Date(date).toLocaleDateString('en-US', { weekday: 'short' });
+};
+
+const fetchWeather = async () => {
+  try {
+    const data = await fetchWeatherData(city.value);
+    currentWeather.value = data.current;
+    if (forecastType.value === 'hourly') {
+      hourlyForecast.value = data.hourly;
+    } else {
+      dailyForecast.value = data.daily;
+    }
+  } catch (error) {
+    console.error('Failed to fetch weather data:', error);
+  }
+};
+
+onMounted(() => {
+  fetchWeather();
+  setInterval(() => {
+    fetchWeather();
+  }, 300000);
+});
+</script>
+
