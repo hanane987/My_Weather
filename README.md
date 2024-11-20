@@ -30,4 +30,42 @@ Table des Matières
     📱 Design Réactif : Parfaitement adapté aux écrans mobiles, tablettes et ordinateurs.
     ✨ Animations : Transitions fluides et éléments animés pour une expérience captivante.
 
+📽️ Démo
+
+    Démo en Ligne : Voir la Démo 🌍
+    Vidéo de Présentation : Regarder la Vidéo 🎥
+
+🚀 Installation et Configuration
+📋 Prérequis
+
+    Node.js : Assurez-vous que Node.js (v16+) est installé.
+    Gestionnaire de Paquets : NPM ou Yarn.
+    Librairies Additionnelles :
+        Font Awesome pour les icônes
+        Animate.css pour les animations
+
+Étapes d’Installation
+
+    Cloner le Référentiel
+
+git clone https://github.com/hanane987/My_Weather.git
+cd My_Weather1
+
+Installer les Dépendances
+
+npm install
+
+Installer les Librairies Frontend
+
+
+
+🛠️ Commandes
+
+Voici une liste des commandes disponibles pour ce projet :
+Commande	         Description
+npm install:	   Installe les dépendances du projet.
+npm run dev:	   Lance l'application en mode développement.
+npm run build:	   Construit l'application pour la production.
+npm run preview:   Prévisualise la version de production localement.
+npm run lint:	   Analyse le code pour détecter les erreurs de style.
 
