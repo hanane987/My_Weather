@@ -32,3 +32,4 @@ export interface WeatherData {
   hourly: ForecastData[];
   daily: ForecastData[];
 }
+
