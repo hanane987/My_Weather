@@ -123,7 +123,7 @@ Ajoutez les classes d'animation dans vos composants HTML :
 
 
 
-📸 Captures d’Écran et Vidéos
+📸 Les Modes utiliser dans le projet
 
     Mode Clair avec Animations
 
@@ -139,9 +139,6 @@ Vérifiez que Font Awesome est correctement importé dans votre projet.
 🤝 Contributions
 
 
-📜 Licence
-
-Ce projet est sous licence MIT. Consultez le fichier LICENSE pour plus de détails.
 📬 Contact
 
     Nom : Hanane Lemnissir 
