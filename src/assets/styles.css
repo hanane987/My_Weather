@@ -383,3 +383,145 @@ gap: 1rem;
 text-align: left;
 }
 }
+@media (max-width: 1200px) {
+    .weather-dashboard {
+      padding: 60px 40px 160px;
+    }
+  
+    .weather-card {
+      max-width: 800px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .weather-dashboard {
+      padding: 40px 20px 120px;
+    }
+  
+    .weather-card {
+      padding: 20px;
+    }
+  
+    .location-header {
+      flex-direction: column;
+      gap: 24px;
+    }
+  
+    .city-title {
+      font-size: 32px;
+    }
+  
+    .settings-dropdown {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% - 40px);
+      max-width: 320px;
+      z-index: 1000;
+    }
+  
+    .current-weather {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+    }
+  
+    .weather-info {
+      text-align: center;
+    }
+  
+    .metrics-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  
+    .forecast-section {
+      margin: 0 -20px;
+      padding: 0 20px;
+    }
+  
+    .hourly-forecast {
+      padding-bottom: 8px;
+    }
+  
+    .forecast-item {
+      min-width: 72px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .weather-dashboard {
+      padding: 20px 16px 80px;
+    }
+  
+    .weather-card {
+      padding: 16px;
+      border-radius: 16px;
+    }
+  
+    .city-title {
+      font-size: 28px;
+    }
+  
+    .current-temp {
+      font-size: 36px;
+    }
+  
+    .weather-icon {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .weather-condition {
+      font-size: 18px;
+    }
+  
+    .toggle-group {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .toggle-button {
+      padding: 8px;
+    }
+  
+    .forecast-item {
+      min-width: 64px;
+    }
+  
+    .brand-footer {
+      margin-top: 40px;
+    }
+  }
+  
+  @media (max-width: 360px) {
+    .weather-dashboard {
+      padding: 16px 12px 60px;
+    }
+  
+    .weather-card {
+      padding: 12px;
+    }
+  
+    .city-title {
+      font-size: 24px;
+    }
+  
+    .current-temp {
+      font-size: 32px;
+    }
+  
+    .weather-icon {
+      width: 48px;
+      height: 48px;
+    }
+  
+    .forecast-item {
+      min-width: 56px;
+    }
+  }
+  
+  
+  
