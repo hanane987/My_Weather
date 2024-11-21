@@ -345,43 +345,40 @@ border-radius: 999px;
 }
 
 .brand-name {
-font-size: 0.75rem;
-font-weight: 500;
-color: var(--text-white-0, #fff);
-margin: 0;
+  font: 500 12px/1 'Inter', sans-serif;
+  color: var(--bg-white-0);
 }
 
-@media (max-width: 768px) {
-.weather-dashboard {
-padding: 1rem;
-}
+/* Responsive Styles */
+@media (max-width: 991px) {
+  .weather-dashboard {
+    padding: 20px;
+  }
 
-.weather-card {
-padding: 1.5rem;
-}
+  .weather-card {
+    padding: 16px;
+  }
 
-.search-container {
-margin-bottom: 1.5rem;
-}
+  .city-title {
+    font-size: 32px;
+  }
 
-.settings-dropdown {
-width: 100%;
-max-width: 280px;
-}
+  .current-temp {
+    font-size: 40px;
+  }
 
-.metrics-grid {
-grid-template-columns: 1fr;
-}
+  .metrics-grid {
+    gap: 4px 20px;
+  }
 
-.current-weather {
-flex-direction: column;
-align-items: flex-start;
-gap: 1rem;
-}
+  .settings-dropdown {
+    width: 100%;
+    max-width: 262px;
+  }
 
-.weather-info {
-text-align: left;
-}
+  .brand-footer {
+    margin-top: 40px;
+  }
 }
 @media (max-width: 1200px) {
     .weather-dashboard {
@@ -523,5 +520,36 @@ text-align: left;
     }
   }
   
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
   
+  @media (hover: hover) {
+    .toggle-button:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
   
+    .settings-button:hover {
+      background-color: #f5f7fa;
+    }
+  }
+  
+  @media (forced-colors: active) {
+    .toggle-button.toggle-active {
+      border: 2px solid CanvasText;
+    }
+  
+    .progress-line {
+      background: Highlight;
+    }
+  }
+  
+  @supports (backdrop-filter: blur(10px)) {
+    .settings-dropdown {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.9);
+    }
+  }
