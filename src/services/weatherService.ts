@@ -1,4 +1,4 @@
-import type { WeatherData } from '../types/WeatherTypes';
+import type { WeatherData } from '../types/weather';
 
 export async function fetchWeatherData(city: string): Promise<WeatherData> {
   // 1. جلب إحداثيات المدينة والتوقيت المحلي (Timezone)

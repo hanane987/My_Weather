@@ -158,8 +158,8 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { fetchWeatherData } from '../services/WeatherService';
-import type { WeatherMetric, ForecastData, CurrentWeather } from '../types/WeatherTypes';
+import { fetchWeatherData } from '../services/weatherService';
+import type { WeatherMetric, HourlyForecast, DailyForecast, CurrentWeather } from '../types/weather';
 
 const { t, locale } = useI18n();
 const currentLocale = ref(locale.value);
@@ -183,8 +183,8 @@ const currentWeather = ref<CurrentWeather>({
   aqi: 0
 });
 
-const hourlyForecast = ref<ForecastData[]>([]);
-const dailyForecast = ref<ForecastData[]>([]);
+const hourlyForecast = ref<HourlyForecast[]>([]);
+const dailyForecast = ref<DailyForecast[]>([]);
 
 const formattedDate = computed(() => {
   const date = new Date();
@@ -205,27 +205,31 @@ const formattedTime = computed(() => {
   });
 });
 
-const weatherMetrics = computed(() => [
+const weatherMetrics = computed<WeatherMetric[]>(() => [
   {
     type: 'humidity',
+    label: 'Humidity',
     value: currentWeather.value.humidity,
     unit: '%',
     icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/fea7a12480e5c80fb5fc2620b6d243d1822eeb247497ca8165613d3b6a0122db'
   },
   {
     type: 'wind',
+    label: 'Wind',
     value: currentWeather.value.windSpeed,
     unit: measurementUnit.value === 'metric' ? 'km/h' : 'mph',
     icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/087615e4d4c559bdf34be66af60cc3f0f00be8de5145c64f99a0427b2751058e'
   },
   {
     type: 'precipitation',
+    label: 'Precipitation',
     value: currentWeather.value.precipitation,
     unit: '%',
     icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/df4108f62ceca6b8d453aa2e8a16ff66dfa7eb1a7f8457ab4ecfb604c2094d18'
   },
   {
     type: 'aqi',
+    label: 'Air quality',
     value: currentWeather.value.aqi,
     unit: '',
     icon: 'https://cdn.builder.io/api/v1/image/assets/TEMP/9699f5d1ae39a8f66a120ca1dc8b27ac975124f9c565c1c3720c062b19e61056'

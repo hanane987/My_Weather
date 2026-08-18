@@ -6,12 +6,17 @@ export interface WeatherMetric {
   icon: string;
 }
 
-export interface ForecastData {
-  time?: string;
-  date?: string;
-  temp?: number;
-  high?: number;
-  low?: number;
+export interface HourlyForecast {
+  time: string;
+  temp: number;
+  icon: string;
+  condition: string;
+}
+
+export interface DailyForecast {
+  date: string;
+  high: number;
+  low: number;
   icon: string;
   condition: string;
 }
@@ -29,7 +34,7 @@ export interface CurrentWeather {
 
 export interface WeatherData {
   current: CurrentWeather;
-  hourly: ForecastData[];
-  daily: ForecastData[];
+  hourly: HourlyForecast[];
+  daily: DailyForecast[];
 }
 
